@@ -76,7 +76,7 @@ const AuthLogin = ({ user, setUser, ...others }) => {
 
       }
     } catch (error) {
-      notifications.show('Login Failed!', {
+      notifications.show(error.response.data.message, {
         autoHideDuration: 3000,
         severity: 'error',
       });

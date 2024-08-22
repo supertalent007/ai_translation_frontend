@@ -34,6 +34,7 @@ import { strengthColor, strengthIndicator } from 'utils/password-strength';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import axios from 'axios';
+import { useNotifications } from '@toolpad/core/useNotifications';
 
 const BACKEND_API = import.meta.env.VITE_BACKEND_API_URL;
 
@@ -46,6 +47,7 @@ const AuthRegister = ({ user, setUser, ...others }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [checked, setChecked] = useState(true);
   const navigate = useNavigate();
+  const notifications = useNotifications();
 
   const [strength, setStrength] = useState(0);
   const [level, setLevel] = useState();
@@ -69,11 +71,22 @@ const AuthRegister = ({ user, setUser, ...others }) => {
   };
 
   const handleSubmit = async () => {
-    const response = await axios.post(`${BACKEND_API}/auth/register`, user);
+    try {
+      const response = await axios.post(`${BACKEND_API}/auth/register`, user);
 
-    localStorage.setItem('token', response.data.token);
+      notifications.show('Register Success! Please check your email to verify your account.', {
+        autoHideDuration: 5000,
+        severity: 'success',
+      });
 
-    navigate('/translations');
+    } catch (error) {
+      notifications.show('Registration failed. Please try again.', {
+        autoHideDuration: 5000,
+        severity: 'error',
+      });
+    }
+
+    // navigate('/translations');
   }
 
   return (

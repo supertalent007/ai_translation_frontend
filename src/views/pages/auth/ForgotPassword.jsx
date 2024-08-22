@@ -45,7 +45,7 @@ const ForgotPassword = () => {
                             <AuthCardWrapper>
                                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                                     <Grid item sx={{ mb: 3 }}>
-                                        <Link to="/home" aria-label="logo">
+                                        <Link to="/" aria-label="logo">
                                             <Logo />
                                         </Link>
                                     </Grid>

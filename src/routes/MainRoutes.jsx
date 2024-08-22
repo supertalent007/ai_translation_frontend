@@ -11,8 +11,6 @@ import SubscriptionsPage from 'views/pages/subscriptions/Subscriptions';
 import ContactUs from 'views/pages/ContactUs';
 import UploadPage from 'views/pages/translations/Uploads';
 
-// dashboard routing
-const DashboardDefault = Loadable(lazy(() => import('views/dashboard')));
 
 // ==============================|| MAIN ROUTING ||============================== //
 

@@ -129,7 +129,7 @@ export default function Footer() {
           <Link color="text.secondary" href="#">
             About us
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="/contact-us">
             Contact us
           </Link>
         </Box>

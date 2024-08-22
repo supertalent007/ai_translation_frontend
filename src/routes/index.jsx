@@ -6,7 +6,7 @@ import LoginRoutes from './AuthenticationRoutes';
 import HomeRoutes from './HomeRoutes';
 
 // ==============================|| ROUTING RENDER ||============================== //
-const router = createBrowserRouter([MainRoutes, LoginRoutes, HomeRoutes], {
+const router = createBrowserRouter([HomeRoutes, LoginRoutes, MainRoutes], {
   basename: import.meta.env.VITE_APP_BASE_NAME
 });
 
