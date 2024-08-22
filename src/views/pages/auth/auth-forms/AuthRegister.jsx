@@ -73,7 +73,7 @@ const AuthRegister = ({ user, setUser, ...others }) => {
 
     localStorage.setItem('token', response.data.token);
 
-    navigate('/dashboard');
+    navigate('/translations');
   }
 
   return (

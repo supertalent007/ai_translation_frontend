@@ -72,7 +72,7 @@ const AuthLogin = ({ user, setUser, ...others }) => {
         });
         localStorage.setItem('token', response.data.token);
 
-        navigate('/dashboard');
+        navigate('/translations');
 
       }
     } catch (error) {
@@ -162,7 +162,7 @@ const AuthLogin = ({ user, setUser, ...others }) => {
                 }
                 label="Remember me"
               />
-              <Typography variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }}>
+              <Typography variant="subtitle1" color="secondary" sx={{ textDecoration: 'none', cursor: 'pointer' }} onClick={e => navigate('/forgot-password')}>
                 Forgot Password?
               </Typography>
             </Stack>

@@ -1,8 +1,8 @@
 // assets
-import { IconCloudUpload, IconBrandDatabricks, IconHelpHexagon, IconCashBanknote } from '@tabler/icons-react';
+import { IconCloudUpload, IconBrandDatabricks, IconHelpHexagon, IconCashBanknote, IconMessage } from '@tabler/icons-react';
 
 // constant
-const icons = { IconCloudUpload, IconBrandDatabricks, IconHelpHexagon, IconCashBanknote };
+const icons = { IconCloudUpload, IconBrandDatabricks, IconHelpHexagon, IconCashBanknote, IconMessage };
 
 // ==============================|| SAMPLE PAGE & DOCUMENTATION MENU ITEMS ||============================== //
 
@@ -40,6 +40,14 @@ const other = {
       type: 'item',
       url: '/faq',
       icon: icons.IconHelpHexagon,
+      breadcrumbs: false
+    },
+    {
+      id: 'contact',
+      title: 'Contact Us',
+      type: 'item',
+      url: '/contact-us',
+      icon: icons.IconMessage,
       breadcrumbs: false
     },
   ]

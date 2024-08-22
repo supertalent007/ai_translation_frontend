@@ -11,12 +11,12 @@ const MinimalLayout = () => {
 
   useEffect(() => {
     if (localStorage.getItem('token')) {
-      navigate('dashboard');
+      navigate('/translations');
     }
     return () => {
       console.log('Cleanup on unmount');
     };
-  }, [])
+  }, []);
 
   return (
     <>

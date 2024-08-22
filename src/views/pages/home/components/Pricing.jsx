@@ -11,25 +11,40 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import AutoAwesomeIcon from '@mui/icons-material/AutoAwesome';
 import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
+import { Slider, Stack } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useStripe } from "@stripe/react-stripe-js";
+import { jwtDecode } from 'jwt-decode';
+
+const BACKEND_API = import.meta.env.VITE_BACKEND_API_URL;
 
 const tiers = [
   {
-    title: 'Free',
-    price: 0,
+    title: 'Starter',
+    price: 9.99,
+    characterLimit: 100000,
+    pageLimit: 50,
+    fileSizeLimit: 10 * 1024 * 1024,
     description: [
       'Get 100,000 Characters ~50 Pages (approx 20,000 words)',
       'Translate 130+ languages',
       'Up to 10 MB per document',
       'Up to 100 pages per PDF',
     ],
-    buttonText: 'Sign up for free',
-    buttonVariant: 'outlined',
+    buttonText: 'Buy Now',
+    buttonVariant: 'contained',
   },
   {
     title: 'Professional',
     subheader: 'Recommended',
-    price: 19.99,
+    characterLimit: 200000,
+    pageLimit: 100,
+    baseCharacterLimit: 200000,
+    basePageLimit: 100,
+    fileSizeLimit: 40 * 1024 * 1024,
+    basePrice: 19.99,
+    maxPrice: 199.99,
     description: [
       'Get 200,000 Characters ~100 Pages (approx 40,000 words)',
       'Translate 130+ languages',
@@ -41,28 +56,65 @@ const tiers = [
   },
   {
     title: 'Enterprise',
-    price: 49.99,
     description: [
       'Unlimited characters or No Word limit',
       'Translate 130+ languages',
       'No File Size Limit',
       'No Page Limit',
     ],
-    buttonText: 'Buy Now',
-    buttonVariant: 'outlined',
+    buttonText: 'Contact Us',
+    buttonVariant: 'contained',
   },
 ];
 
 export default function Pricing({ isAuthenticated }) {
   const navigate = useNavigate();
+  const [id, setId] = React.useState('');
+  const [sliderValue, setSliderValue] = React.useState(0);
+  const stripe = useStripe();
+
+  React.useEffect(() => {
+    if (localStorage.getItem('token')) {
+      setId(jwtDecode(localStorage.getItem('token')).id);
+    }
+    return () => {
+      console.log('Cleanup on unmount');
+    };
+  }, []);
 
   const handleSubscription = async (item) => {
     if (isAuthenticated) {
-      navigate('/plans');
+      if (item.title === 'Enterprise') {
+        navigate('/contact-us');
+        return;
+      }
+
+      const response = await axios.post(`${BACKEND_API}/create_checkout_session`, {
+        items: [{ name: item.title, price: item.title === 'Professional' ? getPrice() : item.price, quantity: 1 }],
+        id: id,
+        plan: item
+      });
+
+      const session = await response.data;
+      const result = await stripe.redirectToCheckout({ sessionId: session.id });
+
+      if (result.error) {
+        console.error(result.error.message);
+      }
     } else {
       navigate('/login');
     }
   }
+
+  const handleSliderChange = (event, newValue) => {
+    setSliderValue(newValue);
+    tiers[1].characterLimit = tiers[1].baseCharacterLimit + newValue * 100000;
+    tiers[1].pageLimit = tiers[1].basePageLimit + newValue * 50;
+  };
+
+  const getPrice = () => {
+    return tiers[1].basePrice + sliderValue * 10;
+  };
 
   return (
     <Container
@@ -93,7 +145,7 @@ export default function Pricing({ isAuthenticated }) {
           customization.
         </Typography>
       </Box>
-      <Grid container spacing={3} alignItems="center" justifyContent="center">
+      <Grid container spacing={3} justifyContent="center">
         {tiers.map((tier) => (
           <Grid
             item
@@ -156,13 +208,37 @@ export default function Pricing({ isAuthenticated }) {
                     color: tier.title === 'Professional' ? 'grey.50' : undefined,
                   }}
                 >
-                  <Typography component="h3" variant="h2">
-                    ${tier.price}
+                  <Typography component="h1" variant="h2" sx={{ color: 'primary' }}>
+                    {
+                      tier.title === 'Professional' ?
+                        `$${getPrice().toFixed(2)}` : tier.title === 'Enterprise' ?
+                          'Custom' :
+                          `$${tier.price}`
+                    }
                   </Typography>
-                  <Typography component="h3" variant="h6">
-                    &nbsp; per month
+                  <Typography component="h3" variant="h64" sx={{ color: '#primary', ml: 2 }}>
+                    {
+                      tier.title !== 'Enterprise' &&
+                      ' One Time'
+                    }
                   </Typography>
                 </Box>
+                {
+                  tier.title === 'Professional' &&
+                  <Stack sx={{ mt: 2 }}>
+                    <Typography sx={{ color: '#fff' }}>
+                      {(tier.characterLimit).toLocaleString()} Characters (~{tier.pageLimit} Pages)
+                    </Typography>
+                    <Slider
+                      value={sliderValue}
+                      onChange={handleSliderChange}
+                      aria-labelledby="continuous-slider"
+                      max={18}
+                      step={1}
+                      sx={{ color: '#fff' }}
+                    />
+                  </Stack>
+                }
                 <Divider
                   sx={{
                     my: 2,

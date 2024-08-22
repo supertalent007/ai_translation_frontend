@@ -14,13 +14,18 @@ import CheckCircleRoundedIcon from '@mui/icons-material/CheckCircleRounded';
 import { useStripe } from "@stripe/react-stripe-js";
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
+import { Slider, Stack } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const BACKEND_API = import.meta.env.VITE_BACKEND_API_URL;
 
 const tiers = [
     {
-        title: 'Free',
-        price: 0,
+        title: 'Starter',
+        price: 9.99,
+        characterLimit: 100000,
+        pageLimit: 50,
+        fileSizeLimit: 10 * 1024 * 1024,
         description: [
             'Get 100,000 Characters ~50 Pages (approx 20,000 words)',
             'Translate 130+ languages',
@@ -33,7 +38,13 @@ const tiers = [
     {
         title: 'Professional',
         subheader: 'Recommended',
-        price: 19.99,
+        characterLimit: 200000,
+        pageLimit: 100,
+        baseCharacterLimit: 200000,
+        basePageLimit: 100,
+        fileSizeLimit: 40 * 1024 * 1024,
+        basePrice: 19.99,
+        maxPrice: 199.99,
         description: [
             'Get 200,000 Characters ~100 Pages (approx 40,000 words)',
             'Translate 130+ languages',
@@ -45,14 +56,13 @@ const tiers = [
     },
     {
         title: 'Enterprise',
-        price: 49.99,
         description: [
             'Unlimited characters or No Word limit',
             'Translate 130+ languages',
             'No File Size Limit',
             'No Page Limit',
         ],
-        buttonText: 'Buy Now',
+        buttonText: 'Contact Us',
         buttonVariant: 'contained',
     },
 ];
@@ -60,6 +70,8 @@ const tiers = [
 export default function SubscriptionsPage() {
     const stripe = useStripe();
     const [id, setId] = React.useState('');
+    const [sliderValue, setSliderValue] = React.useState(0);
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         if (localStorage.getItem('token')) {
@@ -68,12 +80,18 @@ export default function SubscriptionsPage() {
         return () => {
             console.log('Cleanup on unmount');
         };
-    }, [])
+    }, []);
 
     const handleSubscription = async (item) => {
+        if (item.title === 'Enterprise') {
+            navigate('/contact-us');
+            return;
+        }
+
         const response = await axios.post(`${BACKEND_API}/create_checkout_session`, {
-            items: [{ name: item.title, price: item.price, quantity: 1 }],
-            id: id
+            items: [{ name: item.title, price: item.title === 'Professional' ? getPrice() : item.price, quantity: 1 }],
+            id: id,
+            plan: item
         });
 
         const session = await response.data;
@@ -83,6 +101,16 @@ export default function SubscriptionsPage() {
             console.error(result.error.message);
         }
     }
+
+    const handleSliderChange = (event, newValue) => {
+        setSliderValue(newValue);
+        tiers[1].characterLimit = tiers[1].baseCharacterLimit + newValue * 100000;
+        tiers[1].pageLimit = tiers[1].basePageLimit + newValue * 50;
+    };
+
+    const getPrice = () => {
+        return tiers[1].basePrice + sliderValue * 10;
+    };
 
     return (
         <Container
@@ -106,7 +134,7 @@ export default function SubscriptionsPage() {
                     Pricing
                 </Typography>
             </Box>
-            <Grid container spacing={3} alignItems="center" justifyContent="center">
+            <Grid container spacing={3} justifyContent="center">
                 {tiers.map((tier) => (
                     <Grid
                         item
@@ -165,12 +193,36 @@ export default function SubscriptionsPage() {
                                     }}
                                 >
                                     <Typography component="h1" variant="h1" sx={{ color: '#fff' }}>
-                                        ${tier.price}
+                                        {
+                                            tier.title === 'Professional' ?
+                                                `$${getPrice().toFixed(2)}` : tier.title === 'Enterprise' ?
+                                                    'Custom' :
+                                                    `$${tier.price}`
+                                        }
                                     </Typography>
-                                    <Typography component="h3" variant="h64" sx={{ color: '#fff' }}>
-                                        &nbsp; per month
+                                    <Typography component="h3" variant="h64" sx={{ color: '#fff', ml: 2 }}>
+                                        {
+                                            tier.title !== 'Enterprise' &&
+                                            ' One Time'
+                                        }
                                     </Typography>
                                 </Box>
+                                {
+                                    tier.title === 'Professional' &&
+                                    <Stack sx={{ mt: 2 }}>
+                                        <Typography sx={{ color: '#fff' }}>
+                                            {(tier.characterLimit).toLocaleString()} Characters (~{tier.pageLimit} Pages)
+                                        </Typography>
+                                        <Slider
+                                            value={sliderValue}
+                                            onChange={handleSliderChange}
+                                            aria-labelledby="continuous-slider"
+                                            max={18}
+                                            step={1}
+                                            sx={{ color: '#fff' }}
+                                        />
+                                    </Stack>
+                                }
                                 <Divider
                                     sx={{
                                         my: 2,
