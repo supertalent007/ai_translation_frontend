@@ -40,7 +40,7 @@ const BACKEND_API = import.meta.env.VITE_BACKEND_API_URL;
 
 // ===========================|| FIREBASE - REGISTER ||=========================== //
 
-const AuthRegister = ({ user, setUser, ...others }) => {
+const AuthRegister = ({ user, setUser, recaptchaValue, ...others }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
   const customization = useSelector((state) => state.customization);
@@ -72,7 +72,10 @@ const AuthRegister = ({ user, setUser, ...others }) => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post(`${BACKEND_API}/auth/register`, user);
+      const response = await axios.post(`${BACKEND_API}/auth/register`, {
+        user: user,
+        recaptchaToken: recaptchaValue
+      });
 
       notifications.show('Register Success! Please check your email to verify your account.', {
         autoHideDuration: 5000,

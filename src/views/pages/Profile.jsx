@@ -12,11 +12,11 @@ const ProfilePage = () => {
     const notifications = useNotifications();
     const navigate = useNavigate();
 
-    useEffect(async () => {
+    useEffect(() => {
         if (localStorage.getItem('token')) {
             const id = jwtDecode(localStorage.getItem('token')).id;
 
-            const response = await axios.get(`${BACKEND_API}/user/${id}`);
+            const response = axios.get(`${BACKEND_API}/user/${id}`);
 
             if (response.status === 200) {
                 setUser(response.data);

@@ -61,7 +61,7 @@ ToggleCustomTheme.propTypes = {
 };
 
 export default function LandingPage() {
-  const [mode, setMode] = React.useState('light');
+  const [mode, setMode] = React.useState('dark');
   const LPtheme = createTheme(getLPTheme(mode));
   const [isAuthenticated, setIsAuthenticated] = React.useState(false);
 

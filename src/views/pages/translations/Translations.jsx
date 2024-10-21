@@ -21,8 +21,14 @@ const TranslationsPage = () => {
 const UploadedFiles = () => {
     const [data, setData] = React.useState([]);
     const stripe = useStripe();
-    const userId = jwtDecode(localStorage.getItem('token')).id;
     const notifications = useNotifications();
+    const [userId, setUserId] = React.useState('');
+
+    React.useEffect(() => {
+        if (localStorage.getItem('token')) {
+            setUserId(jwtDecode(localStorage.getItem('token')).id);
+        }
+    }, []);
 
     async function fetchData() {
         const response = await axios.get(`${BACKEND_API}/saved_data?userId=${userId}`);
@@ -31,9 +37,9 @@ const UploadedFiles = () => {
         }
     }
 
-    React.useEffect(async () => {
-        await fetchData();
-    }, []);
+    React.useEffect(() => {
+        fetchData();
+    }, [userId]);
 
     const handleSubmit = async (event, item) => {
         event.preventDefault();

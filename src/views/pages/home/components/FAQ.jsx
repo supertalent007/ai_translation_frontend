@@ -61,7 +61,7 @@ export default function FAQ() {
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
               You can reach our customer support team by emailing
-              <Link> info@aipowertranslate.com </Link>
+              <Link> support@fluentdocuments.com </Link>
               or calling our toll-free number. We&apos;re here to assist you
               promptly.
             </Typography>
@@ -86,7 +86,7 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              Our online translation tool is compatible with a wide range of file formats to accommodate various document types. We support all Microsoft Office formats, including .DOC, .DOCX, .XLS, .XLSX, .PPT, .PPTX, .CSV, and .TXT, as well as JSON files. Additionally, we accept Adobe InDesign .IDML files and PDFs. Our platform is also capable of processing various image formats and scanned documents, ensuring comprehensive support for your translation needs.
+              Our online translation tool is compatible with a wide range of file formats to accommodate various document types. We support all Microsoft Office formats, including .DOC, .DOCX, .XLS, .XLSX, .PPT, .PPTX, .CSV, and .TXT, as well as JSON files.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -109,13 +109,8 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              I understand that you are concerned about the "FAILED" status of your recent translation request. I'm truly sorry for any inconvenience caused and would like to assist you further in this matter.
-
-              The issue you've encountered is, unfortunately, something that can happen from time to time. While our advanced AI technology is highly effective at handling and translating a wide range of documents, there are certain complexities in some PDF files that may challenge the current system. This could be due to various reasons including, but not limited to, complex layouts, non-standard fonts, or encrypted text.
-
-              We've already credited back your deposit into your account on our website. This credit is not going to expire and can be used at your convenience for any future projects that you wish to undertake with us.
-
-              Thank you once again for using DocTranslator. We look forward to serving you better in your future translation projects.
+              Your document exceeds the file size, page numbers, or character limits allowed by your subscription plan.
+              Please try again or upgrade your membership.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -138,8 +133,27 @@ export default function FAQ() {
               gutterBottom
               sx={{ maxWidth: { sm: '100%', md: '70%' } }}
             >
-              PowerTranslator provides high quality automatic translations that preserves the original layout and formatting. Our tool has a built-in OCR tool that is capable of deciphering even obscure images and provide legible results. You will receive your results almost instantly.
+              FluentDocuments provides high quality automatic translations that preserves the original layout and formatting. Our tool has a built-in OCR tool that is capable of deciphering even obscure images and provide legible results. You will receive your results almost instantly.
             </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={expanded === 'panel5'}
+          onChange={handleChange('panel5')}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel5d-content"
+            id="panel4d-header"
+          >
+            <Typography component="h3" variant="subtitle2">
+              How can I Use This App?
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails sx={{ fontSize: '16px', lineHeight: 1.5 }}>
+            You can upload files to translate with original and target languages.
+            Then you can translate that file using "Translate with AI" button.
+            After that you will be able to download translated files from server into your local machine.
           </AccordionDetails>
         </Accordion>
       </Box>

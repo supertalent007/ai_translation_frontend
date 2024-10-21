@@ -22,13 +22,28 @@ function Copyright() {
   return (
     <Typography variant="body2" color="text.secondary" mt={1}>
       {'Copyright © '}
-      <Link href="#">AIPowerTranslator&nbsp;</Link>
+      <Link href="#">FluentDocuments&nbsp;</Link>
       {new Date().getFullYear()}
     </Typography>
   );
 }
 
 export default function Footer() {
+
+  const scrollToSection = (sectionId) => {
+    const sectionElement = document.getElementById(sectionId);
+    const offset = 128;
+    if (sectionElement) {
+      const targetScroll = sectionElement.offsetTop - offset;
+      sectionElement.scrollIntoView({ behavior: 'smooth' });
+      window.scrollTo({
+        top: targetScroll,
+        behavior: 'smooth',
+      });
+      setOpen(false);
+    }
+  };
+
   return (
     <Container
       sx={{
@@ -43,83 +58,62 @@ export default function Footer() {
       <Box
         sx={{
           display: 'flex',
-          flexDirection: { xs: 'column', sm: 'row' },
           width: '100%',
           justifyContent: 'space-between',
         }}
       >
         <Box
           sx={{
-            display: 'flex',
+            display: { xs: 'none', sm: 'flex' },
             flexDirection: 'column',
             gap: 4,
-            minWidth: { xs: '100%', sm: '60%' },
+            minWidth: { xs: '100%', sm: '30%' },
           }}
         >
           <Box sx={{ width: { xs: '100%', sm: '60%' } }}>
-            <Box sx={{ ml: '-15px' }}>
-              <img
-                src={logo}
-                style={logoStyle}
-                alt="logo of sitemark"
-              />
-            </Box>
-            <Typography variant="body2" fontWeight={600} gutterBottom>
-              Newsletter
-            </Typography>
-            <Typography variant="body2" color="text.secondary" mb={2}>
-              Subscribe to our newsletter for weekly updates and promotions.
-            </Typography>
-            <Stack direction="row" spacing={1} useFlexGap>
-              <TextField
-                id="outlined-basic"
-                hiddenLabel
-                size="small"
-                variant="outlined"
-                fullWidth
-                aria-label="Enter your email address"
-                placeholder="Your email address"
-                inputProps={{
-                  autoComplete: 'off',
-                  'aria-label': 'Enter your email address',
-                }}
-              />
-              <Button variant="contained" color="primary" sx={{ flexShrink: 0 }}>
-                Subscribe
-              </Button>
-            </Stack>
+            <img
+              src={logo}
+              style={logoStyle}
+              alt="logo of sitemark"
+            />
           </Box>
         </Box>
         <Box
           sx={{
-            display: { xs: 'none', sm: 'flex' },
+            display: { xs: 'flex', sm: 'flex' },
             flexDirection: 'column',
+            alignItems: { xs: 'center', sm: 'flex-start !important' },
+            mx: { xs: 'auto', sm: '0' },
+            mb: 2,
             gap: 1,
           }}
         >
           <Typography variant="body2" fontWeight={600}>
             Product
           </Typography>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('features'); }}>
             Features
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('testimonials'); }}>
             Testimonials
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('highlights'); }}>
             Services
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('pricing'); }}>
             Pricing
           </Link>
-          <Link color="text.secondary" href="#">
+          <Link color="text.secondary" href="#" onClick={(e) => { e.preventDefault(); scrollToSection('faq'); }}>
             FAQs
           </Link>
         </Box>
         <Box
           sx={{
-            display: { xs: 'none', sm: 'flex' },
+            display: { xs: 'flex', sm: 'flex' },
             flexDirection: 'column',
+            alignItems: { xs: 'center', sm: 'flex-start !important' },
+            mx: { xs: 'auto', sm: '0' },
+            mb: 2,
             gap: 1,
           }}
         >
@@ -135,19 +129,22 @@ export default function Footer() {
         </Box>
         <Box
           sx={{
-            display: { xs: 'none', sm: 'flex' },
+            display: { xs: 'flex', sm: 'flex' },
             flexDirection: 'column',
+            alignItems: { xs: 'center', sm: 'flex-start !important' },
+            mx: { xs: 'auto', sm: '0' },
+            mb: 2,
             gap: 1,
           }}
         >
           <Typography variant="body2" fontWeight={600}>
             Legal
           </Typography>
-          <Link color="text.secondary" href="#">
-            Terms
+          <Link color="text.secondary" href="/terms" target="_blank">
+            Terms & Conditions
           </Link>
-          <Link color="text.secondary" href="#">
-            Privacy
+          <Link color="text.secondary" href="/policy" target="_blank">
+            Privacy Policy
           </Link>
         </Box>
       </Box>
@@ -155,25 +152,15 @@ export default function Footer() {
         sx={{
           display: 'flex',
           justifyContent: 'space-between',
-          pt: { xs: 4, sm: 8 },
+          pt: { xs: 4, sm: 4 },
+          justifyContent: 'center',
           width: '100%',
           borderTop: '1px solid',
           borderColor: 'divider',
         }}
       >
-        <div>
-          <Link color="text.secondary" href="#">
-            Privacy Policy
-          </Link>
-          <Typography display="inline" sx={{ mx: 0.5, opacity: 0.5 }}>
-            &nbsp;•&nbsp;
-          </Typography>
-          <Link color="text.secondary" href="#">
-            Terms of Service
-          </Link>
-          <Copyright />
-        </div>
-        <Stack
+        <Copyright />
+        {/* <Stack
           direction="row"
           justifyContent="left"
           spacing={1}
@@ -206,8 +193,8 @@ export default function Footer() {
           >
             <LinkedInIcon />
           </IconButton>
-        </Stack>
+        </Stack> */}
       </Box>
-    </Container>
+    </Container >
   );
 }

@@ -10,6 +10,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ChevronRightRoundedIcon from '@mui/icons-material/ChevronRightRounded';
 import { IconLicense, IconStars, IconWorld } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 const items = [
   {
@@ -40,6 +41,7 @@ const items = [
 
 export default function Features() {
   const [selectedItemIndex, setSelectedItemIndex] = React.useState(0);
+  const navigate = useNavigate();
 
   const handleItemClick = (index) => {
     setSelectedItemIndex(index);
@@ -52,7 +54,7 @@ export default function Features() {
       <Grid container spacing={6}>
         <Grid item xs={12} md={6}>
           <div>
-            <Typography component="h2" variant="h4" color="text.primary">
+            <Typography component="h3" variant="h4" color="text.primary">
               Key Features of Our Tool
             </Typography>
             <Typography
@@ -109,7 +111,7 @@ export default function Features() {
                 minHeight: 280,
               }}
             />
-            <Box sx={{ px: 2, pb: 2 }}>
+            <Box sx={{ px: 2, pb: 2, pt: 2 }}>
               <Typography color="text.primary" variant="body2" fontWeight="bold">
                 {selectedFeature.title}
               </Typography>
@@ -125,6 +127,11 @@ export default function Features() {
                   alignItems: 'center',
                   '& > svg': { transition: '0.2s' },
                   '&:hover > svg': { transform: 'translateX(2px)' },
+                }}
+                onClick={e => {
+                  e.stopPropagation();
+
+                  navigate('/faq');
                 }}
               >
                 <span>Learn more</span>
@@ -219,6 +226,7 @@ export default function Features() {
                       }}
                       onClick={(event) => {
                         event.stopPropagation();
+                        navigate('/faq');
                       }}
                     >
                       <span>Learn more</span>

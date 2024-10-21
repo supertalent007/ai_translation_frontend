@@ -28,7 +28,7 @@ const FaqPage = () => {
                     What File Types Do You Support?
                 </AccordionSummary>
                 <AccordionDetails sx={{ fontSize: '16px', lineHeight: 1.5 }}>
-                    Our online translation tool is compatible with a wide range of file formats to accommodate various document types. We support all Microsoft Office formats, including .DOC, .DOCX, .XLS, .XLSX, .PPT, .PPTX, .CSV, and .TXT, as well as JSON files. Additionally, we accept Adobe InDesign .IDML files and PDFs. Our platform is also capable of processing various image formats and scanned documents, ensuring comprehensive support for your translation needs.
+                    Our online translation tool is compatible with a wide range of file formats to accommodate various document types. We support all Microsoft Office formats, including .DOC, .DOCX, .XLS, .XLSX, .PPT, .PPTX, .CSV, and .TXT, as well as JSON files.
                 </AccordionDetails>
             </Accordion>
             <Accordion sx={{
@@ -51,13 +51,8 @@ const FaqPage = () => {
                     Why did my document failed?
                 </AccordionSummary>
                 <AccordionDetails sx={{ fontSize: '16px', lineHeight: 1.5 }}>
-                    I understand that you are concerned about the "FAILED" status of your recent translation request. I'm truly sorry for any inconvenience caused and would like to assist you further in this matter.
-
-                    The issue you've encountered is, unfortunately, something that can happen from time to time. While our advanced AI technology is highly effective at handling and translating a wide range of documents, there are certain complexities in some PDF files that may challenge the current system. This could be due to various reasons including, but not limited to, complex layouts, non-standard fonts, or encrypted text.
-
-                    We've already credited back your deposit into your account on our website. This credit is not going to expire and can be used at your convenience for any future projects that you wish to undertake with us.
-
-                    Thank you once again for using PowerTranslator. We look forward to serving you better in your future translation projects.
+                    Your document exceeds the file size, page numbers, or character limits allowed by your subscription plan.
+                    Please try again or upgrade your membership.
                 </AccordionDetails>
             </Accordion>
             <Accordion sx={{
@@ -80,7 +75,7 @@ const FaqPage = () => {
                     What is "Translate with AI" Option?
                 </AccordionSummary>
                 <AccordionDetails sx={{ fontSize: '16px', lineHeight: 1.5 }}>
-                    PowerTranslator provides high quality automatic translations that preserves the original layout and formatting. Our tool has a built-in OCR tool that is capable of deciphering even obscure images and provide legible results. You will receive your results almost instantly.
+                    FluentDocuments provides high quality automatic translations that preserves the original layout and formatting. Our tool has a built-in OCR tool that is capable of deciphering even obscure images and provide legible results. You will receive your results almost instantly.
                 </AccordionDetails>
             </Accordion>
             <Accordion sx={{

@@ -1,22 +1,15 @@
 import { Link } from 'react-router-dom';
-
-// material-ui
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
-
-// project imports
 import AuthWrapper1 from '../AuthWrapper1';
 import AuthCardWrapper from '../AuthCardWrapper';
 import Logo from 'ui-component/Logo';
 import AuthRegister from './auth-forms/AuthRegister';
 import { useState } from 'react';
-
-// assets
-
-// ===============================|| AUTH3 - REGISTER ||=============================== //
+import ReCAPTCHA from 'react-google-recaptcha';
 
 const Register = () => {
     const downMD = useMediaQuery((theme) => theme.breakpoints.down('md'));
@@ -26,6 +19,11 @@ const Register = () => {
         email: '',
         password: ''
     });
+    const [recaptchaValue, setRecaptchaValue] = useState(null);
+
+    const handleRecaptchaChange = (value) => {
+        setRecaptchaValue(value);
+    };
 
     return (
         <AuthWrapper1>
@@ -55,7 +53,13 @@ const Register = () => {
                                         </Grid>
                                     </Grid>
                                     <Grid item xs={12}>
-                                        <AuthRegister user={user} setUser={setUser} />
+                                        <AuthRegister user={user} setUser={setUser} recaptchaValue={recaptchaValue} />
+                                    </Grid>
+                                    <Grid item xs={12} sx={{ justifyContent: 'center', display: 'flex', mx: 'auto' }}>
+                                        <ReCAPTCHA
+                                            sitekey="6Lf9kzAqAAAAAPrJrLWp6QDi9H2xxsaNgwzbAjGg"
+                                            onChange={handleRecaptchaChange}
+                                        />
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Divider />
